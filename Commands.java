@@ -1,13 +1,22 @@
 package com.zuul.game;
 
 import java.util.*;
-
+/**
+ * This class stores and makes the commands.
+ * 
+ * @author David Szoke
+ * @version 2017.10.13
+ */
 public class Commands {
 	private ArrayList<String> generalCommands = new ArrayList<String>();
 	private String command;
 	private Scanner reader=new Scanner(System.in);
 	private String firstCommand="";
 	private String secondCommand="";
+	/**
+	 * Constructor of the class.
+	 * Adds items to generalCommands ArrayList.
+	 */
 	public Commands()
 	{
 		generalCommands.add("go");
@@ -19,6 +28,10 @@ public class Commands {
 		generalCommands.add("look");
 		generalCommands.add("use");
 	}
+	/**
+	 * Reads the input from the user and stores it in variables firstCommand and secondCommand.
+	 * The secondCommand variable is not necessary to have a value because we have one-word commands.
+	 */
 	public void setCommand()
 	{
 		String input=reader.nextLine().trim().toLowerCase();

@@ -2,6 +2,7 @@ package com.zuul.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Class Room - a room in an adventure game.
@@ -55,26 +56,26 @@ public class Room
      *     Exits: north west
      * @return A long description of this room
      */
-    public String getLongDescription()
+   /* public String getLongDescription()
     {
         String completeDescription = "You are " + description + ".\n" + ".\n" + "Items in a room";
-        return getExitString();
-    }
+        //return getExitString();
+    }*/
 
     /**
      * Return a string describing the room's exits, for example
      * "Exits: north west".
      * @return Details of the room's exits.
      */
-    private String getExitString()
+   /* private String getExitString()
     {
         String returnString = "Exits:";
-        Set<String> keys = exits.keySet();
+        HashSet<String> keys = exits.keySet();
         for(String exit : keys) {
             returnString += " " + exit;
         }
         return returnString;
-    }
+    }*/
 
     /**
      * Return the room that is reached if we go from this room in direction
