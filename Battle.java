@@ -11,6 +11,24 @@ public class Battle{
 	}
 	
 	public void startBattle() {
+		playerRoll = Dice.roll(20);
+		alienRoll = Dice.roll(20);
+		
+		playerOnTurn = true;
+		
+		if (playerRoll > alienRoll) {
+			System.out.println("Player goes first");
+		} else {
+			playerOnTurn = false;
+			System.out.println("Alien goes first");
+		}
+	}
+	
+	public void fight(Player player) {
+		
+	}
+	
+	public void fight(Alien alien) {
 		
 	}
 }
