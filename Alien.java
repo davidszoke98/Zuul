@@ -9,7 +9,11 @@ public class Alien {
 		this.attack = attack;
 	}
 	
-	public int startBattle(Player player) {
-		Battle battle = new Battle(player, this);	
+	public int getHealth() {
+		return this.health;
+	}
+	
+	public int getAttack() {
+		return this.attack;
 	}
 }

@@ -11,10 +11,10 @@ public class Battle{
 	}
 	
 	public void startBattle() {
-		playerRoll = Dice.roll(20);
-		alienRoll = Dice.roll(20);
+		int playerRoll = Dice.roll(20);
+		int alienRoll = Dice.roll(20);
 		
-		playerOnTurn = true;
+		boolean playerOnTurn = true;
 		
 		if (playerRoll > alienRoll) {
 			System.out.println("Player goes first");

@@ -17,11 +17,11 @@ public class Player {
 		
 	}
 	
-	public addItem(Item item) {
+	public void addItem(Item item) {
 		inventory.add(item);
 	}
 	
-	public getInventory() {
+	public ArrayList<Item> getInventory() {
 		return inventory;
 	}
 	
@@ -37,7 +37,7 @@ public class Player {
 	 */
 	public Item removeItem(String itemName) {
 		for (Item item : inventory) {
-			if(item.getName.equals(itemName)) {
+			if(item.getName().equals(itemName)) {
 				inventory.remove(inventory.indexOf(item));
 				return item;
 			}
@@ -54,7 +54,7 @@ public class Player {
 	 * @return A string if the heal was successful and the amount that was healed
 	 */
 	public String heal(String itemName) {
-		item = this.removeItem(itemName);
+		Item item = this.removeItem(itemName);
 		if(item == null) {
 			return "You don't have any bandages in your inventory";
 		}
@@ -68,7 +68,7 @@ public class Player {
 	 * 
 	 * @param newItem This should be the item that the player is trying to pick up
 	 * @return Returns true if the total weight with the new item is less than or equal to the maximum weight
-	 * @return Returns false if the toatl weight with the new item is more than the maximum weight
+	 * @return Returns false if the total weight with the new item is more than the maximum weight
 	 */
 	public boolean checkWeight(Item newItem) {
 		double currentWeight = 0.0;

@@ -1,3 +1,4 @@
+package com.zuul.game;
 import java.util.Random;
 
 /**
