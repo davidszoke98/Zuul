@@ -9,9 +9,12 @@ public class Player {
 	private int maxHealth;
 	
 	
-	public Player() {
+	public Player(int maxHealth) {
 		inventory = new ArrayList<>();
-		maxWeight = 40.00 
+		maxWeight = 40.00;
+		this.maxHealth = maxHealth;
+		this.currentHealth = maxHealth;
+		
 	}
 	
 	public addItem(Item item) {
@@ -44,6 +47,22 @@ public class Player {
 	
 	
 	/**
+	 * This method tryes to remove an itemName (should be a bandage or another type) and if successful goes onto the healing itself
+	 * 
+	 * @param itemName the item name that should be used as a healing item
+	 * @return A string if there are no bandages in the inventory
+	 * @return A string if the heal was successful and the amount that was healed
+	 */
+	public String heal(String itemName) {
+		item = this.removeItem(itemName);
+		if(item == null) {
+			return "You don't have any bandages in your inventory";
+		}
+		this.currentHealth += 2; //TODO Fix this with a variable, depending on the item's fields etc.
+		return "Healed by " + "HEAL AMOUNT HERE";
+	}
+		
+	/**
 	 * This method checks if the total weight of the current inventory and the weight of the new item that the player has picked up
 	 * will be more than the maximum weight for the player. If the weight is more then it returns false, otherwise, it returns true
 	 * 
@@ -66,5 +85,8 @@ public class Player {
 		
 		return true;
 	}
-
+	
+	public void startBattle(Alien alien) {
+		Battle battle = new Battle(this, alien);
+	}
 }
