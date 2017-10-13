@@ -19,39 +19,16 @@ public class Commands {
 		generalCommands.add("look");
 		generalCommands.add("use");
 	}
-	/*public void setCommand(String firstWord, String secondWord)
-	{
-		String firstCommand="";
-		String secondCommand="";
-		while(firstCommand!="")
-		{
-			for(String item : generalCommands)
-			{
-				if(firstWord.trim().toLowerCase().equals(item))
-				{
-					firstCommand=firstWord.trim().toLowerCase();
-				}
-			}
-		}
-		while(secondCommand!="")
-		{
-			secondCommand=secondWord.trim().toLowerCase();
-		}
-		command=firstCommand + " " + secondCommand;
-	}
-	public String getCommand()
-	{
-		return command;
-	}*/
 	public void setCommand()
 	{
 		String input=reader.nextLine().trim().toLowerCase();
 		String[] splitting = input.split(" ");
-		firstCommand=splitting[0];
-		if(firstCommand!="exit" || firstCommand!="quit")
+		if(splitting.length>1)
 		{
+			firstCommand=splitting[0];
 			secondCommand=splitting[1];
 		}
+		else firstCommand=input;
 		
 	}
 	public String getFirstCommand()
@@ -62,4 +39,16 @@ public class Commands {
 	{
 		return secondCommand;
 	}
+	public ArrayList<String> getCommandList()
+	{
+		return generalCommands;
+	}
+	public void getHelp()
+	{
+		for(String a : generalCommands)
+		{
+			System.out.println(a);
+		}
+	}
+	
 }
