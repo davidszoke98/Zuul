@@ -2,7 +2,6 @@ package com.zuul.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * Class Room - a room in an adventure game.
@@ -14,8 +13,9 @@ import java.util.HashSet;
 public class Room 
 {
     private String description;
+    private String name;
     private HashMap<String, Room> exits;
-    private ArrayList<Item> items;
+    private ArrayList<Item> items = new ArrayList<Item>();
     
 
     /**
@@ -24,8 +24,9 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description)
+    public Room(String name, String description)
     {
+    	this.name = name;
         this.description = description;
         this.exits = new HashMap<>();
         
@@ -42,12 +43,19 @@ public class Room
     }
 
     /**
-     * @return The short description of the room
+     * @return The description of the room
      * (the one that was defined in the constructor).
      */
-    public String getShortDescription()
+    public String getDescription()
     {
         return description;
+    }
+    /**
+     * @return The name of the room.
+     */
+    public String getName()
+    {
+    	return name;
     }
 
     /**
@@ -94,6 +102,14 @@ public class Room
     public void addItem(Item item)
     {
         items.add(item);
+    }
+    public int getItemNumber()
+    {
+    	return items.size();
+    }
+    public ArrayList<Item> getItems()
+    {
+    	return items;
     }
 }
 
