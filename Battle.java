@@ -1,5 +1,10 @@
 package com.zuul.game;
 
+/**
+ * TODO
+ * @author nikola
+ *
+ */
 public class Battle{
 	
 	private Player player;
