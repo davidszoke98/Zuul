@@ -2,6 +2,11 @@ package com.zuul.game;
 
 import java.util.ArrayList;
 
+/**
+ * TODO
+ * @author nikola
+ *
+ */
 public class Player {
 	private ArrayList<Item> inventory;
 	private double maxWeight;
