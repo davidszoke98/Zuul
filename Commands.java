@@ -9,7 +9,6 @@ import java.util.*;
  */
 public class Commands {
 	private ArrayList<String> generalCommands = new ArrayList<String>();
-	private String command;
 	private Scanner reader=new Scanner(System.in);
 	private String firstCommand="";
 	private String secondCommand="";
@@ -27,10 +26,11 @@ public class Commands {
 		generalCommands.add("help");
 		generalCommands.add("look");
 		generalCommands.add("use");
+		generalCommands.add("inventory");
 	}
 	/**
 	 * Reads the input from the user and stores it in variables firstCommand and secondCommand.
-	 * The secondCommand variable is not necessary to have a value because we have one-word commands.
+	 * The secondCommand variable is not necessary to have a value because we have one-word commands too.
 	 */
 	public void setCommand()
 	{
