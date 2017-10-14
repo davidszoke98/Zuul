@@ -18,15 +18,14 @@ public class Commands {
 	 */
 	public Commands()
 	{
-		generalCommands.add("go");
-		generalCommands.add("quit");
-		generalCommands.add("exit");
-		generalCommands.add("take");
-		generalCommands.add("fire");
-		generalCommands.add("help");
-		generalCommands.add("look");
-		generalCommands.add("use");
-		generalCommands.add("inventory");
+		generalCommands.add("go - go to specific direction");
+		generalCommands.add("quit - quit the game");
+		generalCommands.add("take - take an item");
+		generalCommands.add("help - bring up this menu");
+		generalCommands.add("look - look over the room and get a description of it");
+		generalCommands.add("use - use an item that you have in your inventory");
+		generalCommands.add("inventory - check your inventory");
+		generalCommands.add("examine - examine the room and search for items");
 	}
 	/**
 	 * Reads the input from the user and stores it in variables firstCommand and secondCommand.

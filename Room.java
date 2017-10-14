@@ -103,6 +103,11 @@ public class Room
     {
         items.add(item);
     }
+    public void removeItem(Item item)
+    {
+    	int index = items.indexOf(item);
+    	items.remove(index);
+    }
     public int getItemNumber()
     {
     	return items.size();

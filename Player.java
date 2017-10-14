@@ -1,5 +1,6 @@
 package com.zuul.game;
 
+import java.util.*;
 import java.util.ArrayList;
 
 /**
@@ -66,7 +67,15 @@ public class Player {
 		this.currentHealth += 2; //TODO Fix this with a variable, depending on the item's fields etc.
 		return "Healed by " + "HEAL AMOUNT HERE";
 	}
-		
+	public void useItem(String itemName)
+	{
+		Iterator<Item> itr = inventory.iterator();
+		while(itr.hasNext())
+		{
+			Item item = itr.next();
+			if(item.getName().equals(itemName));
+		}
+	}
 	/**
 	 * This method checks if the total weight of the current inventory and the weight of the new item that the player has picked up
 	 * will be more than the maximum weight for the player. If the weight is more then it returns false, otherwise, it returns true

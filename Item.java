@@ -30,10 +30,8 @@ public class Item
         return weight;
     }
     
-    
-    
     public String getLongDescription()
     {
-        return "Item name: " + name + "\nDescription: " + description + "\nWeight: " + getWeight();
+        return "Item name: " + name + "\nDescription: " + description + "\nWeight: " + getWeight() + "\n";
     }
 }

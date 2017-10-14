@@ -5,6 +5,7 @@ public class Game
 {
 	private ArrayList<Room> rooms;
 	private Room currentRoom;
+	private int turns=0;
 	private Player player=new Player(100);
 	public Game()
 	{
@@ -21,6 +22,10 @@ public class Game
 		System.out.printf("You are in the %s\n",currentRoom.getName());
 		while(!finished)
 		{
+			if(turns==20)
+			{
+				
+			}
 			System.out.print("> ");
 			commandline.setCommand();
 			if(commandline.getFirstCommand().equals("quit")||commandline.getFirstCommand().equals("exit"))
@@ -46,6 +51,7 @@ public class Game
 					{
 						currentRoom = currentRoom.getExits(direction);
 						System.out.printf("You entered the %s\n",currentRoom.getName());
+						turns++;
 					}
 					break;
 				}
@@ -54,16 +60,35 @@ public class Game
 					System.out.println(currentRoom.getDescription());
 					break;
 				}
+				case "examine":
+				{
+					if(currentRoom.getItemNumber()>0)
+					{
+						System.out.println("You examined the room and found the following things:");
+						for(Item a : currentRoom.getItems())
+						{
+							System.out.println(a.getName());
+						}
+					}
+					else System.out.println("You found nothing in this room");
+					turns++;
+					break;
+				}
 				case "take":
 				{
 					if(currentRoom.getItemNumber()>0)
 					{
 						String itemName=commandline.getSecondCommand();
-						for(Item a : currentRoom.getItems())
+						Iterator<Item> itr = currentRoom.getItems().iterator();
+						while(itr.hasNext())
 						{
-							if(a.getName().equals(itemName))
+							Item item = itr.next();
+							if(item.getName().equals(itemName))
 							{
-								player.addItem(a);
+								player.addItem(item);
+								itr.remove();
+								turns++;
+								System.out.printf("You took the %s\n",itemName);
 							}
 							else
 							{
@@ -84,7 +109,7 @@ public class Game
 						System.out.println("Your inventory contains the following:");
 						for(Item a : player.getInventory())
 						{
-							System.out.println(a.getName());
+							System.out.printf("%s\n",a.getLongDescription());
 						}
 					}
 					else System.out.println("Your inventory is empty.");
@@ -113,7 +138,7 @@ public class Game
 		// Start of creation of rooms ----------------------------------
 		rooms = new ArrayList<Room>();
 				
-		Room entrance = new Room("Entrance","This is the entrance. You just docked your spaceship here and got off.\nThere are two doors. One to the left and one to the right.");
+		Room entrance = new Room("Entrance","This is the entrance. You just docked your spaceship here and got off.\nThere are two doors. One to west and one to east.");
 		Room escapePod = new Room("Escape pod","You reached your goal, this is the room that has the return spaceship.");
 		
 		Room storageRoom = new Room("Storage room","");
@@ -122,7 +147,7 @@ public class Game
 				
 		Room livingQuarters = new Room("Living quarters","");
 		Room controlCenter = new Room("Control center","");
-		Room lifeSupportCenter = new Room("Life support center","This is the life support center. You can see some bandages laying around.");
+		Room lifeSupportCenter = new Room("Life support center","This is the life support center.\nThere are three doors. One to east, one to north and one to west.");
 				
 		Room medBay = new Room("Medbay","");
 				
@@ -139,43 +164,43 @@ public class Game
 				
 		rooms.add(medBay);
 				
-		entrance.setExit("left", lifeSupportCenter);
-		entrance.setExit("right", controlCenter);
+		entrance.setExit("west", lifeSupportCenter);
+		entrance.setExit("east", controlCenter);
 				
-		lifeSupportCenter.setExit("right", entrance);
-		lifeSupportCenter.setExit("up", medBay);
-		lifeSupportCenter.setExit("left", airlock);
+		lifeSupportCenter.setExit("east", entrance);
+		lifeSupportCenter.setExit("north", medBay);
+		lifeSupportCenter.setExit("west", airlock);
 				
-		airlock.setExit("right", lifeSupportCenter);
-		airlock.setExit("up", medBay);
-		airlock.setExit("right", lab);
+		airlock.setExit("east", lifeSupportCenter);
+		airlock.setExit("north", medBay);
+		airlock.setExit("west", lab);
 				
-		lab.setExit("left", escapePod);
-		lab.setExit("up", medBay);
-		lab.setExit("right", airlock);
+		lab.setExit("west", escapePod);
+		lab.setExit("north", medBay);
+		lab.setExit("east", airlock);
 				
-		escapePod.setExit("left", storageRoom);
-		escapePod.setExit("right", lab);
+		escapePod.setExit("west", storageRoom);
+		escapePod.setExit("east", lab);
 				
-		storageRoom.setExit("left", escapePod);
-		storageRoom.setExit("down", medBay);
-		storageRoom.setExit("right", livingQuarters);
+		storageRoom.setExit("west", escapePod);
+		storageRoom.setExit("south", medBay);
+		storageRoom.setExit("east", livingQuarters);
 				
-		livingQuarters.setExit("left", storageRoom);
-		livingQuarters.setExit("down", medBay);
-		livingQuarters.setExit("right", controlCenter);
+		livingQuarters.setExit("west", storageRoom);
+		livingQuarters.setExit("south", medBay);
+		livingQuarters.setExit("east", controlCenter);
 		
-		controlCenter.setExit("right", entrance);
-		controlCenter.setExit("down", medBay);
-		controlCenter.setExit("left", livingQuarters);
+		controlCenter.setExit("east", entrance);
+		controlCenter.setExit("south", medBay);
+		controlCenter.setExit("west", livingQuarters);
 				
-		medBay.setExit("up-left", storageRoom);
-		medBay.setExit("down-left", lab);
-		medBay.setExit("up", livingQuarters);
-		medBay.setExit("down", airlock);
-		medBay.setExit("up-right", controlCenter);
-		medBay.setExit("down-right", lifeSupportCenter);
-		// End of creation of rooms ------------------------------------
+		medBay.setExit("northwest", storageRoom);
+		medBay.setExit("southwest", lab);
+		medBay.setExit("north", livingQuarters);
+		medBay.setExit("south", airlock);
+		medBay.setExit("northeast", controlCenter);
+		medBay.setExit("southeast", lifeSupportCenter);
+		// End of creation of rooms -----------------------------------------
 		Item bandage = new Item("bandage","Use it to heal yourself.",0.5,20);
 		lifeSupportCenter.addItem(bandage);	
 		currentRoom = entrance;
