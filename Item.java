@@ -7,7 +7,7 @@ public class Item
     private double weight;
     private int power;
     
-    public Item(String name, String description, int weight, int power)
+    public Item(String name, String description, double weight, int power)
     {
     	this.name = name;
         this.description = description;

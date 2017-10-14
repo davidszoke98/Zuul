@@ -114,7 +114,7 @@ public class Game
 		rooms = new ArrayList<Room>();
 				
 		Room entrance = new Room("Entrance","This is the entrance. You just docked your spaceship here and got off.\nThere are two doors. One to the left and one to the right.");
-		Room escapePod = new Room("Escape pod","");
+		Room escapePod = new Room("Escape pod","You reached your goal, this is the room that has the return spaceship.");
 		
 		Room storageRoom = new Room("Storage room","");
 		Room airlock = new Room("Airlock","");
@@ -122,7 +122,7 @@ public class Game
 				
 		Room livingQuarters = new Room("Living quarters","");
 		Room controlCenter = new Room("Control center","");
-		Room lifeSupportCenter = new Room("Life support center","");
+		Room lifeSupportCenter = new Room("Life support center","This is the life support center. You can see some bandages laying around.");
 				
 		Room medBay = new Room("Medbay","");
 				
@@ -176,7 +176,8 @@ public class Game
 		medBay.setExit("up-right", controlCenter);
 		medBay.setExit("down-right", lifeSupportCenter);
 		// End of creation of rooms ------------------------------------
-				
+		Item bandage = new Item("bandage","Use it to heal yourself.",0.5,20);
+		lifeSupportCenter.addItem(bandage);	
 		currentRoom = entrance;
 				
 		/**
