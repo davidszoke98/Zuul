@@ -164,6 +164,10 @@ public class Game
 		livingQuarters.setExit("left", storageRoom);
 		livingQuarters.setExit("down", medBay);
 		livingQuarters.setExit("right", controlCenter);
+		
+		controlCenter.setExit("right", entrance);
+		controlCenter.setExit("down", medBay);
+		controlCenter.setExit("left", livingQuarters);
 				
 		medBay.setExit("up-left", storageRoom);
 		medBay.setExit("down-left", lab);
