@@ -30,11 +30,11 @@ public class Game
 			}
 			if(turns==6 && !locked)
 			{
-				System.out.println("The aliens just broke in.");
+				this.aliensBreakIn();
 			}
 			else if(locked && turns==15)
 			{
-				System.out.println("The aliens just broke in.");
+				this.aliensBreakIn();
 			}
 			if(player.getCurrentHealth()<=0)
 			{
@@ -177,6 +177,34 @@ public class Game
 			}
 		}
 		System.out.println("Thank you for using our product!");
+	}
+	
+	private void aliensBreakIn() {
+		Alien alien1 = new Alien(100, 10);
+		Alien alien2 = new Alien(100, 10);
+		Alien alien3 = new Alien(100, 20);
+		
+		rooms.get(1).addAlien(alien1); // adds an alien to the escape pod for sure
+		
+		int rollForRoomTwo = Dice.roll(9);
+		int rollForRoomThree = Dice.roll(9);
+		
+		while(true) {
+			if(rollForRoomTwo != 1) {
+				rooms.get(rollForRoomTwo).addAlien(alien2);
+				break;
+			} else {
+				rollForRoomTwo = Dice.roll(9);
+			}
+		}
+		while(true) {
+			if(rollForRoomThree != 1 && rollForRoomThree != rollForRoomTwo) {
+				rooms.get(rollForRoomThree).addAlien(alien3);
+				break;
+			}
+		}
+		
+		System.out.println("The aliens just broke in.");
 	}
 	/**
 	 * This method will make new rooms and add some exits and items if necessary. This method

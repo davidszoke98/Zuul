@@ -16,6 +16,7 @@ public class Room
     private String name;
     private HashMap<String, Room> exits;
     private ArrayList<Item> items = new ArrayList<Item>();
+    private ArrayList<Alien> aliens;
     
 
     /**
@@ -29,7 +30,16 @@ public class Room
     	this.name = name;
         this.description = description;
         this.exits = new HashMap<>();
+        this.aliens = new ArrayList<>();
         
+    }
+    
+    public void addAlien(Alien alien) {
+    	this.aliens.add(alien);
+    }
+    
+    public ArrayList<Alien> getAliens(){
+    	return this.aliens;
     }
 
     /**

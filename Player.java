@@ -158,6 +158,10 @@ public class Player {
 			return false;	
 		}
 	}
+	
+	public int getCurrentHealth() {
+		return this.currentHealth;
+	}
 
 	
 	/**
