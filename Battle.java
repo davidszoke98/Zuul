@@ -12,7 +12,6 @@ public class Battle{
 	private Player player;
 	private Alien alien;
 	private boolean playing;
-	//private final String[] commands = {"attack", "run"};
 	private Scanner reader = new Scanner(System.in);
 	
 	public Battle(Player player, Alien alien) {
@@ -27,7 +26,6 @@ public class Battle{
 		System.out.println("A battle started");
 		System.out.println("Possible commands:");
 		System.out.println("attack - you try to attack the alien with your weapon/fists");
-		System.out.println("run - you try to run from the battle to a nearby room");
 		
 		//Decide if the alien would go before you
 		int playerRoll = Dice.roll(20);
@@ -53,17 +51,6 @@ public class Battle{
 					break;
 				}
 				
-			} else if(command.equals("run")) {
-				// The player will try to run and if successful will break out of while loop
-				boolean successful = this.playerRun();
-				if(successful) {
-					System.out.println("You got out successfuly, good job!");
-					break;
-				} else {
-					System.out.println("You couldn't escape, the alien trips you over");
-					continue;
-				}
-				
 			} else {
 				// Program doesn't understand the command, returns to top of while loop
 				System.out.println("I'm sorry, I don't know this command, please try again");
@@ -73,15 +60,7 @@ public class Battle{
 			this.alienDamage();
 		}
 	}
-	
-	private boolean playerRun() {
-		int roll = Dice.roll(15);
-		if(roll > 12) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+
 	
 	private boolean playerDamage() {
 		int damageDone = player.attack();
