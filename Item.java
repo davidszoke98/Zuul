@@ -20,6 +20,10 @@ public class Item
         return name;
     }
     
+    public int getPower() {
+    	return this.power;
+    }
+    
     public String getShortDescription()
     {
         return description;
