@@ -156,7 +156,7 @@ public class Game
 	public void setupGame()
 	{
 		locked=true;
-		// Start of creation of rooms ----------------------------------
+		// Start of creation of rooms -----------------------------------
 		rooms = new ArrayList<Room>();
 				
 		Room entrance = new Room("Entrance","This is the entrance. You just docked your spaceship here and got off.\nThere are two doors. One to north and one to south.");

@@ -14,7 +14,7 @@ public class Commands {
 	private String secondCommand="";
 	/**
 	 * Constructor of the class.
-	 * Adds items to generalCommands ArrayList.
+	 * Adds items to generalCommands ArrayList with the command name and the description.
 	 */
 	public Commands()
 	{

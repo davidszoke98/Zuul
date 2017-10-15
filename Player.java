@@ -100,7 +100,7 @@ public class Player {
 				}
 			}
 		}
-		else System.out.println("You have no items in your inventory");
+		else System.out.println("You have no items in your inventory.");
 	}
 	
 	/**
