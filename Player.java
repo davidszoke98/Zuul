@@ -19,7 +19,7 @@ public class Player {
 		inventory = new ArrayList<>();
 		maxWeight = 40.00;
 		this.maxHealth = maxHealth;
-		this.currentHealth = 100;
+		this.currentHealth = maxHealth;
 		
 	}
 	

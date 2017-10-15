@@ -5,6 +5,7 @@ public class Game
 {
 	private ArrayList<Room> rooms;
 	private boolean locked;
+	private boolean wasInLab;
 	private Room currentRoom;
 	private int turns=0;
 	private Player player=new Player(100);
@@ -23,9 +24,28 @@ public class Game
 		System.out.printf("You are in the %s\n",currentRoom.getName());
 		while(!finished)
 		{
-			if(turns==20)
+			if(currentRoom.getName().equals("Laboratory"))
 			{
-				
+				wasInLab=true;
+			}
+			if(turns==6 && !locked)
+			{
+				System.out.println("The aliens just broke in.");
+			}
+			else if(locked && turns==15)
+			{
+				System.out.println("The aliens just broke in.");
+			}
+			if(player.getCurrentHealth()<=0)
+			{
+				System.out.println("You died. Game over");
+				break;
+			}
+			if(currentRoom.getName().equals("Escape pod"))
+			{
+				System.out.println(currentRoom.getDescription());
+				System.out.println("You won the game!");
+				break;
 			}
 			System.out.print("> ");
 			commandLine.setCommand();
@@ -62,7 +82,14 @@ public class Game
 				}
 				case "look":
 				{
-					System.out.println(currentRoom.getDescription());
+					if(currentRoom.getName().equals("Control center") && wasInLab==true)
+					{
+						System.out.println("You are in the control center. There are three doors in this room: west, south, southwest.\nHere you can fix the laboratory's north door. Type in 'fix' to fix the door.");
+					}
+					else
+					{
+						System.out.println(currentRoom.getDescription());
+					}
 					break;
 				}
 				case "examine":
@@ -128,6 +155,7 @@ public class Game
 				{
 					String itemName = commandLine.getSecondCommand();
 					player.useItem(itemName);
+					turns++;
 					break;
 				}
 				case "fix":
@@ -135,6 +163,8 @@ public class Game
 					if(currentRoom.getName().equals("Control center"))
 					{
 						locked=false;
+						turns++;
+						System.out.println("You fixed the errors of the doors.");
 					}
 					else System.out.println("There is nothing to fix in this room.");
 					break;
@@ -156,6 +186,7 @@ public class Game
 	public void setupGame()
 	{
 		locked=true;
+		wasInLab=false;
 		// Start of creation of rooms -----------------------------------
 		rooms = new ArrayList<Room>();
 				
@@ -165,7 +196,7 @@ public class Game
 		Room airlock = new Room("Airlock","You are in the airlock. There are three doors here. One to west, one to north and one to east.");
 		Room lab = new Room("Laboratory","This is the laboratory. There are three doors. One to north, one to northeast and one to east.");
 		Room livingQuarter = new Room("Living quarter","This is the living quarter. There are three doors: west, east and south.");
-		Room controlCenter = new Room("Control center","You are in the control center. Here you can fix the laboratory's north door. Type in 'fix' to fix the door.\nThere are three doors in this room: west, south, southwest");
+		Room controlCenter = new Room("Control center","You are in the control center.\nThere are three doors in this room: west, south, southwest");
 		Room lifeSupportCenter = new Room("Life support center","This is the life support center.\nThere are three doors. One to west, one to northwest and one to north.");
 		Room medBay = new Room("Medbay","This is the medbay. There are 6 doors.\nThe doors are in the following directions: northwest, north, northeast, southeast, south, southwest.");
 				
