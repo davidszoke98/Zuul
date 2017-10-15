@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /**
  * TODO
- * @author nikola
+ * @author Nikola Velichkov
  *
  */
 public class Player {
@@ -19,7 +19,7 @@ public class Player {
 		inventory = new ArrayList<>();
 		maxWeight = 40.00;
 		this.maxHealth = maxHealth;
-		this.currentHealth = maxHealth;
+		this.currentHealth = 100;
 		
 	}
 	
@@ -52,17 +52,60 @@ public class Player {
 	}
 	public void useItem(String itemName)
 	{
-		Iterator<Item> itr = inventory.iterator();
-		while(itr.hasNext())
+		ArrayList<Item> inv = this.getInventory();
+		if(inv.size()>0)
 		{
-			Item item = itr.next();
-			if(item.getName().equals(itemName));
+			Iterator<Item> itr = inventory.iterator();
+			while(itr.hasNext())
+			{
+				Item item = itr.next();
+				if(item.getName().equals(itemName));
+				{
+					switch(itemName)
+					{
+						case "bandage": case "medicine":
+						{
+							int healingPower = item.getPower();
+							if(currentHealth==maxHealth)
+							{
+								System.out.println("You don't need the bandage, you are on maximum health");
+								break;
+							}
+							else if(this.currentHealth+healingPower>=maxHealth)
+							{
+								int healedBy=100-currentHealth;
+								currentHealth=100;
+								System.out.printf("You were healed by %d.\n",healedBy);
+								itr.remove();
+							}
+							else 
+							{
+								currentHealth+=healingPower;
+								System.out.printf("You were healed by %d.\n",healingPower);
+								System.out.printf("Now you have %d health.\n",currentHealth);
+								itr.remove();
+							}
+							if(currentHealth==maxHealth)
+							{
+								System.out.println("You are on maximum health.");
+							}
+							break;
+						}
+						default:
+						{
+							System.out.printf("You have no %s in your inventory.\n",itemName);
+							break;
+						}
+					}
+				}
+			}
 		}
+		else System.out.println("You have no items in your inventory");
 	}
 	
 	/**
 <<<<<<< HEAD
-	 * This method tryes to remove an itemName (should be a bandage or another type) and if successful goes onto the healing itself
+	 * This method tries to remove an itemName (should be a bandage or another type) and if successful goes onto the healing itself
 	 * 
 	 * @param itemName the item name that should be used as a healing item
 	 * @return A string if there are no bandages in the inventory

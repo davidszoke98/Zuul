@@ -51,10 +51,6 @@ public class Commands {
 	{
 		return secondCommand;
 	}
-	public ArrayList<String> getCommandList()
-	{
-		return generalCommands;
-	}
 	public void getHelp()
 	{
 		for(String a : generalCommands)

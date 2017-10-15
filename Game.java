@@ -4,6 +4,7 @@ import java.util.*;
 public class Game 
 {
 	private ArrayList<Room> rooms;
+	private boolean locked;
 	private Room currentRoom;
 	private int turns=0;
 	private Player player=new Player(100);
@@ -13,7 +14,7 @@ public class Game
 	}
 	public void play() 
 	{
-		Commands commandline=new Commands();
+		Commands commandLine=new Commands();
 		boolean finished=false;
 		System.out.print("Space Jungle\u00AE 2017\nThis game is written by Nikola Velichkov, Piotr Gzubiczki and David Szoke.\nVersion 1.0.0\nYou can type 'help' to show your available commands.\n\n");
 		System.out.println("You are an astronaut who just found a space station near Earth.");
@@ -27,25 +28,29 @@ public class Game
 				
 			}
 			System.out.print("> ");
-			commandline.setCommand();
-			if(commandline.getFirstCommand().equals("quit")||commandline.getFirstCommand().equals("exit"))
+			commandLine.setCommand();
+			if(commandLine.getFirstCommand().equals("quit"))
 			{
 				finished=true;
 			}
-			switch(commandline.getFirstCommand())
+			switch(commandLine.getFirstCommand())
 			{
 				case "help":
 				{
 					System.out.println("Here are the commands that you can use in this game:");
-					commandline.getHelp();
+					commandLine.getHelp();
 					break;
 				}
 				case "go":
 				{
-					String direction=commandline.getSecondCommand();
+					String direction=commandLine.getSecondCommand();
 					if(currentRoom.getExits(direction)==null)
 					{
 						System.out.println("I can't go there");
+					}
+					else if(currentRoom.getName().equals("Laboratory") && direction.equals("north") && locked)
+					{
+						System.out.println("This door is locked due to an error in the system. Go to the Control center to fix it.");
 					}
 					else
 					{
@@ -78,7 +83,7 @@ public class Game
 				{
 					if(currentRoom.getItemNumber()>0)
 					{
-						String itemName=commandline.getSecondCommand();
+						String itemName=commandLine.getSecondCommand();
 						Iterator<Item> itr = currentRoom.getItems().iterator();
 						while(itr.hasNext())
 						{
@@ -115,13 +120,28 @@ public class Game
 					else System.out.println("Your inventory is empty.");
 					break;
 				}
-				case "exit":
+				case "quit":
 				{
+					break;
+				}
+				case "use":
+				{
+					String itemName = commandLine.getSecondCommand();
+					player.useItem(itemName);
+					break;
+				}
+				case "fix":
+				{
+					if(currentRoom.getName().equals("Control center"))
+					{
+						locked=false;
+					}
+					else System.out.println("There is nothing to fix in this room.");
 					break;
 				}
 				default:
 				{
-					System.out.printf("I don't know how to %s.\n",commandline.getFirstCommand());
+					System.out.printf("I don't know how to %s.\n",commandLine.getFirstCommand());
 					break;
 				}
 			}
@@ -135,74 +155,82 @@ public class Game
 	 */
 	public void setupGame()
 	{
+		locked=true;
 		// Start of creation of rooms ----------------------------------
 		rooms = new ArrayList<Room>();
 				
-		Room entrance = new Room("Entrance","This is the entrance. You just docked your spaceship here and got off.\nThere are two doors. One to west and one to east.");
+		Room entrance = new Room("Entrance","This is the entrance. You just docked your spaceship here and got off.\nThere are two doors. One to north and one to south.");
 		Room escapePod = new Room("Escape pod","You reached your goal, this is the room that has the return spaceship.");
-		
-		Room storageRoom = new Room("Storage room","");
-		Room airlock = new Room("Airlock","");
-		Room lab = new Room("Laboratory","");
-				
-		Room livingQuarters = new Room("Living quarters","");
-		Room controlCenter = new Room("Control center","");
-		Room lifeSupportCenter = new Room("Life support center","This is the life support center.\nThere are three doors. One to east, one to north and one to west.");
-				
-		Room medBay = new Room("Medbay","");
+		Room storageRoom = new Room("Storage room","You are in the storage room. Make sure you examine this place because here you might find very useful things.\nThere are two doors. One to east and one to southeast.");
+		Room airlock = new Room("Airlock","You are in the airlock. There are three doors here. One to west, one to north and one to east.");
+		Room lab = new Room("Laboratory","This is the laboratory. There are three doors. One to north, one to northeast and one to east.");
+		Room livingQuarter = new Room("Living quarter","This is the living quarter. There are three doors: west, east and south.");
+		Room controlCenter = new Room("Control center","You are in the control center. Here you can fix the laboratory's north door. Type in 'fix' to fix the door.\nThere are three doors in this room: west, south, southwest");
+		Room lifeSupportCenter = new Room("Life support center","This is the life support center.\nThere are three doors. One to west, one to northwest and one to north.");
+		Room medBay = new Room("Medbay","This is the medbay. There are 6 doors.\nThe doors are in the following directions: northwest, north, northeast, southeast, south, southwest.");
 				
 		rooms.add(entrance);
-		rooms.add(escapePod);
-				
+		rooms.add(escapePod);	
 		rooms.add(storageRoom);
 		rooms.add(airlock);
-		rooms.add(lab);
-				
-		rooms.add(livingQuarters);
+		rooms.add(lab);	
+		rooms.add(livingQuarter);
 		rooms.add(controlCenter);
 		rooms.add(lifeSupportCenter);
-				
 		rooms.add(medBay);
 				
-		entrance.setExit("west", lifeSupportCenter);
-		entrance.setExit("east", controlCenter);
+		entrance.setExit("south", lifeSupportCenter);
+		entrance.setExit("north", controlCenter);
 				
-		lifeSupportCenter.setExit("east", entrance);
-		lifeSupportCenter.setExit("north", medBay);
+		lifeSupportCenter.setExit("north", entrance);
+		lifeSupportCenter.setExit("northwest", medBay);
 		lifeSupportCenter.setExit("west", airlock);
 				
 		airlock.setExit("east", lifeSupportCenter);
 		airlock.setExit("north", medBay);
 		airlock.setExit("west", lab);
 				
-		lab.setExit("west", escapePod);
-		lab.setExit("north", medBay);
+		lab.setExit("north", escapePod);
+		lab.setExit("northeast", medBay);
 		lab.setExit("east", airlock);
 				
-		escapePod.setExit("west", storageRoom);
-		escapePod.setExit("east", lab);
+		escapePod.setExit("south", lab);
 				
-		storageRoom.setExit("west", escapePod);
-		storageRoom.setExit("south", medBay);
-		storageRoom.setExit("east", livingQuarters);
+		storageRoom.setExit("southeast", medBay);
+		storageRoom.setExit("east", livingQuarter);
 				
-		livingQuarters.setExit("west", storageRoom);
-		livingQuarters.setExit("south", medBay);
-		livingQuarters.setExit("east", controlCenter);
+		livingQuarter.setExit("west", storageRoom);
+		livingQuarter.setExit("south", medBay);
+		livingQuarter.setExit("east", controlCenter);
 		
-		controlCenter.setExit("east", entrance);
-		controlCenter.setExit("south", medBay);
-		controlCenter.setExit("west", livingQuarters);
+		controlCenter.setExit("south", entrance);
+		controlCenter.setExit("southwest", medBay);
+		controlCenter.setExit("west", livingQuarter);
 				
 		medBay.setExit("northwest", storageRoom);
 		medBay.setExit("southwest", lab);
-		medBay.setExit("north", livingQuarters);
+		medBay.setExit("north", livingQuarter);
 		medBay.setExit("south", airlock);
 		medBay.setExit("northeast", controlCenter);
 		medBay.setExit("southeast", lifeSupportCenter);
-		// End of creation of rooms -----------------------------------------
+		// End of creation of rooms -------------------
+		// Creating items --------------------------------------------------- 
 		Item bandage = new Item("bandage","Use it to heal yourself.",0.5,20);
-		lifeSupportCenter.addItem(bandage);	
+		Item medicine = new Item("medicine","Use it to heal yourself.",0.2,40);
+		Item rifle = new Item("rifle","You can use this item in the battle.",3.6,20);
+		Item laserGun = new Item("lasergun","A very powerful weapon. Use it carefully.",6.4,60);
+		// End of creating items ---------------------------------------------------------------
+		// Adding items to the rooms -----------------------------------------------------------
+		int laserRarity = Dice.roll(10);
+		if(laserRarity==4)
+		{
+			storageRoom.addItem(laserGun);
+		}
+		storageRoom.addItem(rifle);
+		medBay.addItem(medicine);
+		lifeSupportCenter.addItem(bandage);
+		// End of adding items ------------
+		// Set up current room 
 		currentRoom = entrance;
 				
 		/**
