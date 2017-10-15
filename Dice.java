@@ -21,7 +21,7 @@ public class Dice
      */
     public static int roll(int max)
     {
-        return Dice.random.nextInt(max + 1);
+        return Dice.random.nextInt(max);
     }
 
 }
