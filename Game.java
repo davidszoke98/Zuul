@@ -24,6 +24,10 @@ public class Game
 		System.out.printf("You are in the %s\n",currentRoom.getName());
 		while(!finished)
 		{
+			if(currentRoom.getAliens().size() > 0) {
+				Battle battle = new Battle(player, currentRoom.getAliens().get(0));
+				battle.startBattle();
+			}
 			if(currentRoom.getName().equals("Laboratory"))
 			{
 				wasInLab=true;
