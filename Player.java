@@ -148,27 +148,17 @@ public class Player {
 	 * @return if the player takes critical damage it returns false indicating that the player has died
 	 * @return if the player has more than 0 health, they are still alive, so returned true
 	 */
-	public void takeDamage(int damage) {
+	public boolean takeDamage(int damage) {
 		this.currentHealth -= damage;
-		if(checkIfDead()) {
-			System.out.println("You have died");
-			//Terminate program
-		} else {
-			System.out.println("You have " + this.currentHealth + " health left");
-		}
-	}
-	
-	public boolean checkIfDead() {
-		if(this.currentHealth <= 0) {
+		
+		if(this.currentHealth < 0) {
 			return true;
 		} else {
-			return false;
+			System.out.println("You have " + this.currentHealth + " health left");
+			return false;	
 		}
 	}
-	
-	public int getCurrentHealth() {
-		return this.currentHealth;
-	}
+
 	
 	/**
 	 * This method tries to remove an itemName (should be a bandage or another type) and if successful goes onto the healing itself
@@ -196,13 +186,29 @@ public class Player {
 	
 	// Battle methods
 	
-	public int attack(int minimumRoll) {
-		int roll = Dice.roll(20);
-		if(minimumRoll > roll) {
+	public int attack() {
+		int power = this.getHighestWeapon();
+		int roll = Dice.roll(power / 10 + 1);
+		if(roll == 0) {
 			return 0;
 		}
 		
-		return roll - minimumRoll;
+		return roll * 10;
+	}
+	
+	private int getHighestWeapon() {
+		int power = 10;
+		
+		for(Item item : this.inventory) {
+			if(item.getName().equals("lasergun")) {
+				power = item.getPower();
+				break;
+			} else if(item.getName().equals("rifle")) {
+				power = item.getPower();
+			}
+		}
+		
+		return power;
 	}
 	
 
